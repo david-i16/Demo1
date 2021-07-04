@@ -1,8 +1,6 @@
 <!doctype html>
 <html>
     <head>
-
-        
         <meta charset="UTF-8">
         <title>demopage</title>
         <script src="https://cdn.babylonjs.com/babylon.max.js"></script>
@@ -28,12 +26,13 @@
                     var scene = new BABYLON.Scene(engine);
                     scene.clearColor = new BABYLON.Color3.White();
                     
-                    //var box = BABYLON.Mesh.CreateBox("Box",4.0,scene);//random box showing up
-                    var model1 = BABYLON.SceneLoader.ImportMeshAsync("", "", "VE-Stand-PRIM2.obj", scene);//tiktok stand not showing up
+                    var model1 = BABYLON.SceneLoader.ImportMeshAsync("", "", "VE-Stand-PRIM2.obj", scene);
+                    
 
-                    var camera = new BABYLON.TouchCamera("TouchCamera", new BABYLON.Vector3(0, 0, -10), scene);
-                    camera.setTarget(BABYLON.Vector3.Zero());
-                    camera.fov = 1.4;//sets camera further from screen(0.8 default value)
+                    var camera = new BABYLON.TouchCamera("TouchCamera", new BABYLON.Vector3(0, 0, 0), scene);
+                    camera.angularSensibility = 5000;
+                    camera.minZ = 0;
+                    camera.position = new BABYLON.Vector3(50, 350, -1500);
                     
                     //camera.upperBetaLimit = 0;
                     //camera.lowerRadiusLimit = 0;
@@ -43,11 +42,15 @@
                     //not working for touch camera
 
                     camera.attachControl(canvas, true); 
-                     
+
+
+                    model1.rotation = new BABYLON.Vector3(0, Math.PI / 2, 0);
+                    //model1.rotation.y = Math.PI/4;
+                    //model rotation not woking?
                     
                     
                     var light = new BABYLON.PointLight("pointLight", new BABYLON.Vector3(0,10,-10), scene);
-                    light.diffuse = new BABYLON.Color3(1,0,0);
+                    //light.diffuse = new BABYLON.Color3(1,0,0);
 
                     var layer = new BABYLON.Layer('','https://cdn.nohat.cc/thumb/f/720/ea6442b861be4eab93e8.jpg', scene, true);//background
 
