@@ -47,10 +47,12 @@
                     model1.rotation = new BABYLON.Vector3(0, Math.PI / 2, 0);
                     //model1.rotation.y = Math.PI/4;
                     //model rotation not woking?
+
+                    
                     
                     
                     var light = new BABYLON.PointLight("pointLight", new BABYLON.Vector3(0,10,-10), scene);
-                    //light.diffuse = new BABYLON.Color3(1,0,0);
+                    light.diffuse = new BABYLON.Color3(1,0,0);
 
                     var layer = new BABYLON.Layer('','https://cdn.nohat.cc/thumb/f/720/ea6442b861be4eab93e8.jpg', scene, true);//background
 
