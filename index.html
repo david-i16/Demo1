@@ -25,36 +25,22 @@
                 var createScene = function () {
                     var scene = new BABYLON.Scene(engine);
                     scene.clearColor = new BABYLON.Color3.White();
-                    
-                    //var model1 = BABYLON.SceneLoader.ImportMeshAsync("", "", "VE-Stand-PRIM2.obj", scene);
 
                     BABYLON.SceneLoader.ImportMeshAsync("", "", "VE-Stand-PRIM2.obj",scene).then((result) => {
-                    const model0 = result.meshes[0];
-                    model0.rotation.y = Math.PI / 2;
-                    
-                    var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
-                    myMaterial.diffuseColor = new BABYLON.Color3(255, 204, 102);
-                    myMaterial.specularColor = new BABYLON.Color3(0.5, 0.6, 0.87);
-                    model0.material = myMaterial;
-
-                    const model1 = result.meshes[1];
-                    model1.rotation.y = Math.PI / 2;
-
-
+                    for(var i=0;i<=91;i++)
+                    {
+                        const model = result.meshes[i];
+                        model.rotation.y = Math.PI / 2;
+                        
+                    }
                 });
                     
 
-                    var camera = new BABYLON.TouchCamera("TouchCamera", new BABYLON.Vector3(0, 0, 0), scene);
-                    camera.angularSensibility = 5000;
+                    var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, 0), scene);
+                    camera.angularSensibility = 10000;
                     camera.minZ = 0;
                     camera.position = new BABYLON.Vector3(50, 350, -1500);
                     
-                    //camera.upperBetaLimit = 0;
-                    //camera.lowerRadiusLimit = 0;
-                    //camera.upperRadiusLimit = 0;
-                    //camera.lowerAlphaLimit = Math.PI / 2;
-                    //camera.upperAlphaLimit = Math.PI / 2;
-                    //not working for touch camera
 
                     camera.attachControl(canvas, true); 
 
@@ -72,11 +58,21 @@
 
                     var layer = new BABYLON.Layer('','https://cdn.nohat.cc/thumb/f/720/ea6442b861be4eab93e8.jpg', scene, true);//background
 
+                    scene.registerBeforeRender(function () {
+                        camera.rotation.x = 0;//camera restriction for up and down movement
+                        if (camera.rotation.y < -0.4) {
+                        camera.rotation.y = -0.4;
+                    }
+                    if (camera.rotation.y > 0.38) {
+                        camera.rotation.y = 0.38;
+                    }//camera left and right boundaries
+                    })
+                    
+
                     return scene;
                 }
 
                 var scene = createScene();
-
 
 
                 engine.runRenderLoop(function(){
