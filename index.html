@@ -26,12 +26,67 @@
                     var scene = new BABYLON.Scene(engine);
                     scene.clearColor = new BABYLON.Color3.White();
 
+                    var light = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(2, 0, 20), scene);
+                    light.position = new BABYLON.Vector3(0, 10, -20);
+                    light.intensity = 0.6;
+                    var shadowGenerator = new BABYLON.ShadowGenerator(8192, light);
+
+                    
                     BABYLON.SceneLoader.ImportMeshAsync("", "", "VE-Stand-PRIM2.obj",scene).then((result) => {
                     for(var i=0;i<=91;i++)
                     {
                         const model = result.meshes[i];
                         model.rotation.y = Math.PI / 2;
                         
+
+                        if(i==0)
+                        {
+                            const material = new BABYLON.StandardMaterial('material', scene);
+                            material.diffuseTexture = new BABYLON.Texture('https://i.imgur.com/xJR5zMX.jpeg', scene);
+                            model.material = material;
+                            
+                        }
+                        if(i==2)
+                        {
+                            const material = new BABYLON.StandardMaterial('material', scene);
+                            material.diffuseTexture = new BABYLON.Texture('https://i.imgur.com/oacYN7f.png', scene);
+                            model.material = material;
+                        }
+                        if(i==3)
+                        {
+                            //const material = new BABYLON.StandardMaterial('material', scene);
+                            //material.diffuseColor = new BABYLON.Color3(0, 0, 255);
+                            //model.material = material;
+
+                            var pbr = new BABYLON.PBRMetallicRoughnessMaterial("pbr", scene);
+                            model.material = pbr;
+                            pbr.baseColor = new BABYLON.Color3(0, 0, 255);
+                            pbr.metallic = 1.0;
+                            pbr.roughness = 0.4;
+                        }
+                        if(i==1)
+                        {
+                            const material = new BABYLON.StandardMaterial('material', scene);
+                            material.diffuseTexture = new BABYLON.Texture('https://i.imgur.com/0ezlRYU.jpeg', scene);
+                            model.material = material;
+                        }
+                        if(i==7)
+                        {
+                            const material = new BABYLON.StandardMaterial('material', scene);
+                            material.diffuseColor = new BABYLON.Color3(1, 0, 0);
+                            //material.emissiveColor = new BABYLON.Color3(0, 1, 0);
+                            model.material = material;
+                        }
+
+                        shadowGenerator.getShadowMap().renderList.push(model);
+                        shadowGenerator.forceBackFacesOnly = true;
+                        shadowGenerator.blurKernel = 32;
+                        shadowGenerator.useKernelBlur = true;
+
+                        light.shadowMinZ = 10;
+                        light.shadowMaxZ = 70;
+
+                        model.receiveShadows = true;
                     }
                 });
                     
@@ -42,19 +97,8 @@
                     camera.position = new BABYLON.Vector3(50, 350, -1500);
                     
 
-                    camera.attachControl(canvas, true); 
-
-
-                    var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
-
-                    myMaterial.diffuseColor = new BABYLON.Color3(255, 204, 102);
-                    myMaterial.specularColor = new BABYLON.Color3(0.5, 0.6, 0.87);
-                    //model1.material = myMaterial;
-
+                    camera.attachControl(canvas, true);
                     
-                    
-                    
-                    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(1, 1, 0));
 
                     var layer = new BABYLON.Layer('','https://cdn.nohat.cc/thumb/f/720/ea6442b861be4eab93e8.jpg', scene, true);//background
 
