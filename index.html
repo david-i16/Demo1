@@ -31,13 +31,18 @@
                     light.intensity = 0.6;
                     var shadowGenerator = new BABYLON.ShadowGenerator(8192, light);
 
+
+                    var matrix = BABYLON.Matrix.Scaling(1, 1, -1);//matrix for mirroring the meshes along z-axis
                     
+
                     BABYLON.SceneLoader.ImportMeshAsync("", "", "VE-Stand-PRIM2.obj",scene).then((result) => {
                     for(var i=0;i<=91;i++)
                     {
                         const model = result.meshes[i];
-                        model.rotation.y = Math.PI / 2;
+
+                        model.bakeTransformIntoVertices(matrix);//mirror every mesh
                         
+                        model.rotation.y = Math.PI / 2;
 
                         if(i==0)
                         {
