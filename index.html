@@ -7,6 +7,7 @@
 
         <script src="babylon.js"></script>
         <script src="babylon.objFileLoader.js"></script>
+        <script src="babylon.glTFFileLoader.js"></script>
 
         <style>
             #canvas {
@@ -33,9 +34,11 @@
 
 
                     var matrix = BABYLON.Matrix.Scaling(1, 1, -1);//matrix for mirroring the meshes along z-axis
+
+                    var model1 = BABYLON.SceneLoader.ImportMeshAsync("", "", "SALA STORYA  REFACUTA  01 - GLB (1).glb",scene);
                     
 
-                    BABYLON.SceneLoader.ImportMeshAsync("", "", "VE-Stand-PRIM2.obj",scene).then((result) => {
+                    /*BABYLON.SceneLoader.ImportMeshAsync("", "", "VE-Stand-PRIM2.obj",scene).then((result) => {
                     for(var i=0;i<=91;i++)
                     {
                         const model = result.meshes[i];
@@ -93,7 +96,7 @@
 
                         model.receiveShadows = true;
                     }
-                });
+                });*/
                     
 
                     var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, 0), scene);
@@ -117,6 +120,9 @@
                     }//camera left and right boundaries
                     })
                     
+
+                    
+
 
                     return scene;
                 }
